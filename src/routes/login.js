@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
     req.session.user = user;
     if (!user) {
       req.session.loginFailures = 1 || req.session.loginFailures + 1;
-      return;
+      return res.redirect('/login');
     }
   } else {
     const user = await User.add(req.body.username, req.body.password);
