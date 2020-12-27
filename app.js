@@ -4,6 +4,7 @@ const path = require('path');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const helmet = require('helmet')();
 
 const indexRouter = require('./src/routes/index');
 const loginRouter = require('./src/routes/login');
@@ -13,6 +14,7 @@ const initIndices = require('./src/init-indices')
 const app = express();
 
 getMongoClient().then(initIndices);
+app.use(helmet);
 app.use(session({
   secret: "ABC 132 QWE",
   resave: false,
