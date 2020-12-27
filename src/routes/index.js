@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 
   const files = await Files.getFilesInFolder(userId, path);
 
-  res.render('index', { files, prevPath, breadcrumbPath });
+  res.render('index', { files, path, prevPath, breadcrumbPath });
 });
 
 module.exports = router;
