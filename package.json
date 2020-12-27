@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www"
+    "dev": "nodemon ./bin/www "
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -16,11 +16,21 @@
     "helmet": "^4.2.0",
     "http-errors": "^1.6.3",
     "mongodb": "^3.6.3",
-    "mongoose": "^5.11.8",
     "morgan": "~1.9.1"
   },
   "devDependencies": {
-    "eslint": "^7.16.0",
-    "nodemon": "^2.0.6"
+    "eslint": "^7.16.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

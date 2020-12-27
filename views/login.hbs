@@ -29,7 +29,8 @@
 
         .login-form input[type="submit"] {
             width: 100%;
-            padding: 15px;
+            padding: 10px;
+            margin: 5px;
             background-color: #535b63;
             border: 0;
             box-sizing: border-box;
@@ -43,7 +44,7 @@
 <body>
     <div class="login-form">
         {{#if failures}}
-            <p style="color: red;">Sorry, wrong login</p>
+            <p style="color: red;">Sorry, wrong username/password</p>
         {{/if}}
         
         <h1>Login Form</h1>

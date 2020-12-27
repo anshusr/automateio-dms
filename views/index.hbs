@@ -1,2 +1,25 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<h1>AutomateIO File system</h1> 
+Files:{{files.length}}<br>
+Path:{{breadcrumbPath}}<br>
+
+<h2>Add new file</h2>
+<form action="file" method="POST">
+  File Name: <input type="name" name="name" placeholder="Name" required> <br>
+  Is Folder:<input type="checkbox" name="isFolder" placeholder="Is Folder"> <br>
+  <input type="hidden" name="path" value="{{path}}"/>
+  Content<input type="textbox" name="content" /> <br>
+  <input type="submit"/>
+</form>
+<br>
+
+<h2>File list</h2>
+<ul class="file_list">
+  <li><a href="?path={{prevPath}}">...</a></li>
+  {{#each files}}
+  {{#if this.isFolder}}
+    <li><a href="/?path={{#if this.path}}{{this.path}},{{/if}}{{this.name}}">+ {{this.name}}</a></li>
+  {{else}}
+    <li><a href="/file?id={{this._id}}">{{this.name}}</a></li>
+  {{/if}}
+  {{/each}}
+</ul>

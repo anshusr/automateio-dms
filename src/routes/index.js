@@ -1,34 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const { handleLoginSubmit } = require('../services/login');
+const Files = require('../dal/files');
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   if (!req.session.user) {
-    res.redirect('/login');
+    return res.redirect('/login');
   }
-  res.render('index', { title: 'Express' });
-});
+  const userId = req.session.user._id;
+  const path = req.query.path || '';
+  const pathArray = path.split(',');
+  const prevPath = pathArray.slice(0, pathArray.length - 1).join(',');
+  const breadcrumbPath = ['root'].concat(path.split(',')).join(' > ');
 
-router.get('/login', (req, res) => {
-  res.render('login', { failures: req.session.loginFailures > 0 });
-});
+  const files = await Files.getFilesInFolder(userId, path);
 
-router.post('/login', (req, res) => {
-  handleLoginSubmit(req).then(() => {
-    if(req.session.user) {
-      res.redirect('/');
-    }
-    res.redirect('/login');
-  });
-});
-
-router.post('/register', (req, res) => {
-  handleRegister(req).then(() => {
-    if(req.session.user) {
-      res.redirect('/')
-    }
-    res.redirect('/login');
-  });
+  res.render('index', { files, prevPath, breadcrumbPath });
 });
 
 module.exports = router;

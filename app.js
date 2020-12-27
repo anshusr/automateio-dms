@@ -6,14 +6,13 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./src/routes/index');
-const usersRouter = require('./src/routes/users');
+const loginRouter = require('./src/routes/login');
+const fileRouter = require('./src/routes/files');
 const { getMongoClient } = require('./src/mongo-client');
-const initIndices = require('./src/init-indices.js')
-const helmet = require('helmet');
+const initIndices = require('./src/init-indices')
 const app = express();
 
 getMongoClient().then(initIndices);
-app.use(helmet());
 app.use(session({
   secret: "ABC 132 QWE",
   resave: false,
@@ -32,7 +31,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/file', fileRouter);
+app.use('/login', loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
