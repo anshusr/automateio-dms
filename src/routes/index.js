@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const Files = require('../dal/files');
+const { handleError } = require('../utils');
 
-router.get('/', async (req, res) => {
-  if (!req.session.user) {
-    return res.redirect('/login');
-  }
+router.get('/', handleError(displayIndex));
+
+async function displayIndex(req, res) {
   const userId = req.session.user._id;
   const path = req.query.path || '';
   const pathArray = path.split(',');
@@ -15,6 +15,6 @@ router.get('/', async (req, res) => {
   const files = await Files.getFilesInFolder(userId, path);
 
   res.render('index', { files, path, prevPath, breadcrumbPath });
-});
+}
 
 module.exports = router;

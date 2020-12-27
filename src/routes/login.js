@@ -1,12 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../dal/user');
+const { handleError } = require('../utils');
 
-router.get('/', (req, res) => {
+router.get('/', handleError(getLoginPage, false));
+router.post('/', handleError(handleLoginPost, false));
+
+function getLoginPage(req, res) {
   res.render('login', { failures: req.session.loginFailures > 0 });
-});
+}
 
-router.post('/', async (req, res) => {
+async function handleLoginPost(req, res) {
   if (req.body.action === 'login') {
     const user = await User.get(req.body.username, req.body.password);
     req.session.user = user;
@@ -24,6 +28,6 @@ router.post('/', async (req, res) => {
     return res.redirect('/')
   }
   res.redirect('/login');
-});
+}
 
 module.exports = router;

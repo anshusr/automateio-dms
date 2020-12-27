@@ -16,7 +16,7 @@ async function getFilesInFolder(userId, path) {
 async function add(name, isFolder, userId, path, content) {
   const client = await getMongoClient();
   const collection = client.db('dms').collection('files');
-  const doc = await collection.findOne({ name, userId: ObjectId(userId) });
+  const doc = await collection.findOne({ name, userId: ObjectId(userId), path });
   if (doc) {
     throw new Error('Filename already exists');
   }
